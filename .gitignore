@@ -1,0 +1,20 @@
+# Downloaded and generated chart data
+charts/
+georefs/
+
+# Generated file formats from the workflow
+*.pdf
+*.png
+*.zip
+*.json
+*.log
+
+# Python cache and virtual environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# OS files
+.DS_Store
+Thumbs.db
