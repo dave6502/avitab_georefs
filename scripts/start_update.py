@@ -27,7 +27,7 @@ def start_update(airac_cycle):
     try:
         (url, zip_path, extract_dir) = get_team_avitab_zip_paths(airac_prev, airac_new)  
         download_zip(url, zip_path)
-        print(f"\nWARNING: Georef zip for {airac_prev}_{airac_new} already exists, does {airac_new} really need update?")
+        print(f"\nWARNING: Georef zip for {airac_prev}_{airac_new} already exists in TeamAvitab, does {airac_new} really need update?")
         print(f"Continuing anyway ...")
     except:
         pass

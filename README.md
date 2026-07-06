@@ -18,7 +18,12 @@ The recommended release strategy is to release a pair of AIRAC cycles each month
 
 ## Quick start
 
-Before running the workflow, install the required Python packages:
+Clone the git repo:
+```bash
+git clone https://github.com/dave6502/avitab_georefs
+```
+
+Install the required Python packages:
 
 ```bash
 pip install -r requirements.txt
@@ -41,7 +46,7 @@ This script performs the following steps for the requested AIRAC cycle:
 7. starts the interactive similar-chart review tool if any charts still need manual review
 8. shows the current georeference status
 
-If you run start_update.py, it will also fetch georeference data from the TeamAvitab GitHub repository automatically, so there is no need to obtain a separate georef bundle elsewhere before using this workflow.
+If you run start_update.py, it will fetch georeference data from the TeamAvitab GitHub repository automatically, so there is no need to obtain a separate georef bundle elsewhere before using this workflow.
 
 ## Requirements
 
