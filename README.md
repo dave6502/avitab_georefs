@@ -14,6 +14,8 @@ The workflow is built around AIRAC cycles, which are updated every 28 days. The 
 
 This repository is aimed at UK airspace data (EG region) and is intended for users who want to keep Avitab-compatible chart georeferences current.
 
+The recommended release strategy is to release a pair of AIRAC cycles each month - e.g. 2607_2608. 2607 contains all georefs for 2607. 2608 contains only georefs for updated PDFs. Releases overlap, so the next release would be 2608_2609. This allow a 28 day AIRAC 2608 window in which the latest 2608_2609 release can be georeferenced and uploaded such that Avitab users always have the relevant georef metadata for the current AIRAC cycle.
+
 ## Quick start
 
 Before running the workflow, install the required Python packages:
@@ -45,7 +47,7 @@ If you run start_update.py, it will also fetch georeference data from the TeamAv
 
 ### Supported environments
 
-Tested on WSL2, but the Python is OS-agnostic so Windows, macOS and Linux should also work. WSL2 is recommended due to its native GUI support. WSL 1 (with e.g. XServer setup) is not recommended for the copy_similar_georefs_gui.py script.
+Tested on WSL2, but the Python is OS-agnostic so Windows, macOS and Linux should also work. WSL2 is recommended due to its native GUI support. WSL 1 (with e.g. XServer setup) is not recommended for the copy_similar_georefs_gui.py script. The MinGW environment that can be used for building Avitab itself is not supported.
 
 ### Python
 
@@ -117,7 +119,7 @@ This folder is used for packaged georeference output. The generated bundles are 
 
 ## Scripts
 
-The scripts have a shebang, so on appropriately configured Unix environments, they can be run directly without the 'python' call.
+The scripts have a shebang, so on appropriately configured Unix environments, they can be run directly without the 'python' call. If this doesn't work, check that line endings are (Linux) LF rather than (Windows) CRLF.
 
 ### scripts/download.py
 
@@ -131,9 +133,11 @@ python scripts/download.py 2607
 
 ### scripts/reorganise.py
 
-Reorganises the chart files into a standard structure grouped by aerodrome and chart type.
+Reorganises the chart files into a standard structure grouped by aerodrome and chart type with PDFs renamed more descriptively.
 
-The downloaded AIRAC charts from UK NATS require reorganisation since the raw downloaded PDFs have just numeric names (e.g. 123456.pdf) that provide no information about the chart's content, aerodrome, or chart type. Also, organising charts in a deeply structured directory layout (by ICAO code, aerodrome, and chart type) makes it easier to locate and manage charts within Avitab itself.
+The downloaded AIRAC charts from UK NATS require reorganisation since the raw downloaded PDFs have unhelpful numeric names (e.g. 123456.pdf). Also, organising charts in a deeply structured directory layout (by ICAO code, aerodrome, and chart type) makes the number of files/folders shown in an Avitab page smaller. It's thus quicker to scroll/select through the folder hierarchy when using the Avitab folder browser.
+
+When the PDFs are reorganised/renamed, the aerodrome HTML files are also relinked in the local unzipped UK NATS AIP website. So this can still be browsed offline as normal. 
 
 Usage example:
 
@@ -260,6 +264,6 @@ Use the following keys while the tool is running:
 ## Notes
 
 - All scripts use relative paths by default, assuming they are run from the repository root
-- Charts are downloaded from the NATS official distribution (UK airspace only). Internet access is required for the download phase.
+- Charts are downloaded from the NATS official distribution. Internet access is required for the download phase.
 - UK NATS AIP only serves the .zip files for 3 AIRAC cycles at a time - current, next and next + 1. Older .zips are typically not made available. It is essential to update while the 2 (previous and new update cycles) are available on UK NATS AIP.
 - The project is specifically oriented to UK (EG) aeronautical charts. However, the scripts could be adapted/refactored for use with other country's AIP charts.
