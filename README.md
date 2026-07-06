@@ -32,7 +32,7 @@ pip install -r requirements.txt
 The easiest way to begin is to use the main update workflow script:
 
 ```bash
-python scripts/start_update.py 2608
+python3 scripts/start_update.py 2608
 ```
 
 This script performs the following steps for the requested AIRAC cycle:
@@ -52,7 +52,12 @@ If you run start_update.py, it will fetch georeference data from the TeamAvitab 
 
 ### Supported environments
 
-Tested on WSL2, but the Python is OS-agnostic so Windows, macOS and Linux should also work. WSL2 is recommended due to its native GUI support. WSL 1 (with e.g. XServer setup) is not recommended for the copy_similar_georefs_gui.py script. The MinGW environment that can be used for building Avitab itself is not supported.
+Tested on WSL2 and Ubuntu 24, but the Python is OS-agnostic so Windows and macOS should also work.
+If using WSL2, running in the native /home folder is significantly faster than inside /mnt/c.
+WSL1 (with e.g. XServer setup) is not recommended for the copy_similar_georefs_gui.py script.
+If running in Ubuntu 24, there may be some other Python system installs required in addition to
+those in (pip3 install) requirements.txt. Use one of those new-fangled AI tools to fix.
+The MinGW environment that can be used for building Avitab itself is not supported.
 
 ### Python
 
@@ -124,7 +129,7 @@ This folder is used for packaged georeference output. The generated bundles are 
 
 ## Scripts
 
-The scripts have a shebang, so on appropriately configured Unix environments, they can be run directly without the 'python' call. If this doesn't work, check that line endings are (Linux) LF rather than (Windows) CRLF.
+The scripts have a shebang, so on appropriately configured Unix environments, they can be run directly without the 'python3' call. If this doesn't work, check that line endings are (Linux) LF rather than (Windows) CRLF.
 
 ### scripts/download.py
 
@@ -133,7 +138,7 @@ Downloads the AIRAC ZIP package for a given cycle  from the UK NATS AIP and extr
 Usage example:
 
 ```bash
-python scripts/download.py 2607
+python3 scripts/download.py 2607
 ```
 
 ### scripts/reorganise.py
@@ -147,7 +152,7 @@ When the PDFs are reorganised/renamed, the aerodrome HTML files are also relinke
 Usage example:
 
 ```bash
-python scripts/reorganise.py charts/EG_AIRAC_2607
+python3 scripts/reorganise.py charts/EG_AIRAC_2607
 ```
 
 ### scripts/copy_matching_georefs.py
@@ -157,7 +162,7 @@ Copies georeferencing JSON files from one cycle to another when the PDF content 
 Usage example:
 
 ```bash
-python scripts/copy_matching_georefs.py charts/EG_AIRAC_2607 charts/EG_AIRAC_2608````
+python3 scripts/copy_matching_georefs.py charts/EG_AIRAC_2607 charts/EG_AIRAC_2608````
 
 ### scripts/copy_similar_georefs_gui.py
 
@@ -166,7 +171,7 @@ Runs the interactive GUI-based tool for reviewing charts whose content is simila
 Usage:
 
 ```bash
-python scripts/copy_similar_georefs_gui.py charts/EG_AIRAC_2607 charts/EG_AIRAC_2608`
+python3 scripts/copy_similar_georefs_gui.py charts/EG_AIRAC_2607 charts/EG_AIRAC_2608`
 ```
 
 ### scripts/status.py
@@ -176,7 +181,7 @@ Checks the georeferencing status of the charts in a cycle or cycles and reports 
 Usage:
 
 ```bash
-python scripts/status.py charts/EG_AIRAC_2608
+python3 scripts/status.py charts/EG_AIRAC_2608
 ```
 
 ### scripts/package.py
@@ -186,7 +191,7 @@ Packages selected georeference JSON files into a distributable archive.
 Usage:
 
 ```bash
-python scripts/package.py charts/EG_AIRAC_2607 charts/EG_AIRAC_2608
+python3 scripts/package.py charts/EG_AIRAC_2607 charts/EG_AIRAC_2608
 ```
 
 ### scripts/start_update.py
@@ -196,7 +201,7 @@ Runs the complete update workflow for a new AIRAC cycle. This is the recommended
 Usage:
 
 ```bash
-python scripts/start_update.py 2608
+python3 scripts/start_update.py 2608
 ```
 
 ### scripts/pdf2png.py
@@ -205,7 +210,7 @@ Converts a PDF chart to PNG. This is a smaller helper script and is not part of 
 Usage:
 
 ```bash
-python scripts/pdf2png.py some_chart.pdf
+python3 scripts/pdf2png.py some_chart.pdf
 ```
 
 ## How to operate the copy_similar_georefs_gui.py script
@@ -224,7 +229,7 @@ Use this tool when:
 From the repository root, run:
 
 ```bash
-python scripts/copy_similar_georefs_gui.py charts/EG_AIRAC_2607 charts/EG_AIRAC_2608
+python3 scripts/copy_similar_georefs_gui.py charts/EG_AIRAC_2607 charts/EG_AIRAC_2608
 ```
 
 The first argument is the previous cycle directory, and the second argument is the current cycle directory.
