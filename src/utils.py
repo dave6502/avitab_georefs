@@ -154,6 +154,8 @@ def get_team_avitab_zip_paths(airac1, airac2):
     TEAM_AVITAB_GEOREFS_URL = "https://github.com/dave6502/temp_test_georef/releases/download/RELEASE/TeamAvitabGeorefs.zip"
     url = TEAM_AVITAB_GEOREFS_URL.replace("RELEASE", f"{airac1}_{airac2}")
     zip_name = Path(url).name
-    zip_path = Path.cwd() / "charts" / zip_name
-    extract_dir = Path.cwd() / "charts" / f"{str(Path(zip_name).stem)}_{airac1}_{airac2}"
+    georefs_dir = Path.cwd() / "georefs"
+    ensure_dir(georefs_dir)
+    zip_path = georefs_dir / zip_name
+    extract_dir = georefs_dir / f"{str(Path(zip_name).stem)}_{airac1}_{airac2}"
     return (url, zip_path, extract_dir)
