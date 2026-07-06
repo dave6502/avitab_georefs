@@ -10,18 +10,9 @@ import shutil
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from src.utils import get_json_hash, get_pdf_hash, is_georefenceable
 from src.utils import copy_json, get_pdfs, get_jsons, get_json_path, path_to_airac_id
-from src.utils import download_zip, unzip_file
+from src.utils import download_zip, unzip_file, get_team_avitab_zip_paths
 from src.airac import Airac
 
-
-TEAM_AVITAB_GEOREFS_URL = "https://github.com/dave6502/temp_test_georef/releases/download/RELEASE/TeamAvitabGeorefs.zip"
-
-def get_zip_paths(airac1, airac2):
-    url = TEAM_AVITAB_GEOREFS_URL.replace("RELEASE", f"{airac1}_{airac2}")
-    zip_name = Path(url).name
-    zip_path = Path.cwd() / "charts" / zip_name
-    extract_dir = Path.cwd() / "charts" / f"{str(Path(zip_name).stem)}_{airac1}_{airac2}"
-    return (url, zip_path, extract_dir)
 
 def download_georefs(new_pdf_dir_path):
     new_airac_id = path_to_airac_id(new_pdf_dir_path)
@@ -30,12 +21,12 @@ def download_georefs(new_pdf_dir_path):
     next_airac = new_airac.get_next()
     
     try:
-        (url, zip_path, extract_dir) = get_zip_paths(prev_airac, new_airac)  
+        (url, zip_path, extract_dir) = get_team_avitab_zip_paths(prev_airac, new_airac)  
         download_zip(url, zip_path)
     except:
         print(f"Couldn't fetch georefs for {prev_airac}_{new_airac}, try {new_airac}_{next_airac} ...")
         try:
-            (url, zip_path, extract_dir) = get_zip_paths(new_airac, next_airac)
+            (url, zip_path, extract_dir) = get_team_avitab_zip_paths(new_airac, next_airac)
             download_zip(url, zip_path)            
         except:
             raise FileNotFoundError(f"Couldn't download TeamAvitab georefs for AIRAC {new_airac}")

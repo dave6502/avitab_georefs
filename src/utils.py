@@ -140,7 +140,7 @@ def download_zip(url: str, output_path: Path) -> None:
                         f.write(chunk)
             return
         except Exception as e:
-            print(f"Attempt {attempt + 1} failed: {e}")
+            pass
     raise RuntimeError(f"Failed to download {url}")
 
 def unzip_file(zip_path: Path, extract_to: Path) -> None:
@@ -148,3 +148,12 @@ def unzip_file(zip_path: Path, extract_to: Path) -> None:
     extract_to.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(zip_path, "r") as zip_ref:
         zip_ref.extractall(extract_to)
+
+
+def get_team_avitab_zip_paths(airac1, airac2):
+    TEAM_AVITAB_GEOREFS_URL = "https://github.com/dave6502/temp_test_georef/releases/download/RELEASE/TeamAvitabGeorefs.zip"
+    url = TEAM_AVITAB_GEOREFS_URL.replace("RELEASE", f"{airac1}_{airac2}")
+    zip_name = Path(url).name
+    zip_path = Path.cwd() / "charts" / zip_name
+    extract_dir = Path.cwd() / "charts" / f"{str(Path(zip_name).stem)}_{airac1}_{airac2}"
+    return (url, zip_path, extract_dir)

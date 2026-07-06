@@ -13,7 +13,7 @@ from copy_matching_georefs import copy_matching_georefs
 from copy_similar_georefs_gui import copy_similar_georefs_gui
 from status import status
 from src.airac import Airac
-from src.utils import airac_to_path
+from src.utils import airac_to_path, get_team_avitab_zip_paths, download_zip
 
 def print_heading(msg):
     print("\n" '\033[4m' + msg + '\033[0m')
@@ -24,6 +24,14 @@ def start_update(airac_cycle):
     airac_new_dir = airac_to_path(airac_new)
     airac_prev_dir = airac_to_path(airac_prev)
     
+    try:
+        (url, zip_path, extract_dir) = get_team_avitab_zip_paths(airac_prev, airac_new)  
+        download_zip(url, zip_path)
+        print(f"\nWARNING: Georef zip for {airac_prev}_{airac_new} already exists, does {airac_new} really need update?")
+        print(f"Continuing anyway ...")
+    except:
+        pass
+        
     print_heading(f"Download previous AIRAC {airac_prev} into {airac_prev_dir} ...")
     print(f"Cmdline equivalent : 'scripts/download.py {airac_prev}'")
     download(str(airac_prev))
